@@ -1,4 +1,4 @@
-package pl.sztuczkap.ksiegarnia;
+package pl.sztuczkap.ksiegarnia.catalog.domain;
 
 public class Book {
     Long id;
