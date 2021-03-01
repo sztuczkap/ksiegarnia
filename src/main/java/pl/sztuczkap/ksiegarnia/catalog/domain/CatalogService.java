@@ -2,6 +2,7 @@ package pl.sztuczkap.ksiegarnia.catalog.domain;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,13 @@ public class CatalogService {
         return repository.findAll()
                 .stream()
                 .filter(book -> book.getTitle().startsWith(title))
+                .collect(Collectors.toList());
+    }
+
+    public List<Book> findByAuthor(String author) {
+        return repository.findAll()
+                .stream()
+                .filter(book -> book.getAuthor().startsWith(author))
                 .collect(Collectors.toList());
     }
 }
