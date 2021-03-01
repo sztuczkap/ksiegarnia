@@ -8,6 +8,6 @@ public class KsiegarniaOnlineStoreApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(KsiegarniaOnlineStoreApplication.class, args);
-
     }
+
 }
