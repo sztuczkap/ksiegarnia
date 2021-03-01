@@ -16,7 +16,7 @@ class SchoolCatalogRepository implements CatalogRepository {
 
     public SchoolCatalogRepository() {
         storage.put(1L, new Book(1L, "Pan Tadeusz", "Adam Mickiewicz", 1834));
-        storage.put(2L, new Book(2L, "Ogniem i Mieczezm", "Adam Mickiewicz", 1884));
+        storage.put(2L, new Book(2L, "Ogniem i Mieczem", "Adam Mickiewicz", 1884));
         storage.put(3L, new Book(3L, "Chłopi", "Władysław Reymont", 1904));
         storage.put(4L, new Book(4L, "Pan Wołodyjowski", "Henryk Sienkiewicz", 1890));
     }
