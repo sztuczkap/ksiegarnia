@@ -1,6 +1,6 @@
 package pl.sztuczkap.ksiegarnia.catalog.application;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.sztuczkap.ksiegarnia.catalog.application.port.CatalogUseCase;
 import pl.sztuczkap.ksiegarnia.catalog.domain.Book;
@@ -11,25 +11,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 class CatalogService implements CatalogUseCase {
 
     private CatalogRepository repository;
-
-    public CatalogService(@Qualifier("schoolCatalogRepository") CatalogRepository repository) {
-        this.repository = repository;
-    }
 
     public List<Book> findByTitle(String title) {
         return repository.findAll()
                 .stream()
                 .filter(book -> book.getTitle().startsWith(title))
-                .collect(Collectors.toList());
-    }
-
-    public List<Book> findByAuthor(String author) {
-        return repository.findAll()
-                .stream()
-                .filter(book -> book.getAuthor().startsWith(author))
                 .collect(Collectors.toList());
     }
 
@@ -42,8 +32,9 @@ class CatalogService implements CatalogUseCase {
         return Optional.empty();
     }
 
-    public void addBook(){
-
+    public void addBook(CreateBookCommand command) {
+        Book book = new Book(command.getTitle(), command.getAuthor(), command.getYear());
+        repository.save(book);
     }
 
     @Override
@@ -51,11 +42,11 @@ class CatalogService implements CatalogUseCase {
 
     }
 
-    public void removeById(Long id){
+    public void removeById(Long id) {
 
     }
 
-    public void updateBook(){
+    public void updateBook() {
 
     }
 
