@@ -6,7 +6,6 @@ import pl.sztuczkap.ksiegarnia.catalog.application.port.CatalogUseCase;
 import pl.sztuczkap.ksiegarnia.catalog.domain.Book;
 import pl.sztuczkap.ksiegarnia.catalog.domain.CatalogRepository;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +29,14 @@ class CatalogService implements CatalogUseCase {
     }
 
     @Override
+    public Optional<Book> findOneByTitle(String title) {
+        return repository.findAll()
+                .stream()
+                .filter(book -> book.getTitle().startsWith(title))
+                .findFirst();
+    }
+
+    @Override
     public Optional<Book> findOneByTitleAndAuthor(String title, String author) {
         return repository.findAll()
                 .stream()
@@ -39,7 +46,7 @@ class CatalogService implements CatalogUseCase {
     }
 
     public void addBook(CreateBookCommand command) {
-        Book book = new Book(command.getTitle(), command.getAuthor(), command.getYear());
+        Book book = command.toBook();
         repository.save(book);
     }
 
@@ -60,7 +67,6 @@ class CatalogService implements CatalogUseCase {
     public void removeBook(Long id) {
 
     }
-
 
 
 }

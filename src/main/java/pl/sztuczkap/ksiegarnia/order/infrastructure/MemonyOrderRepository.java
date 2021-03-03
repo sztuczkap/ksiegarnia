@@ -5,6 +5,7 @@ import pl.sztuczkap.ksiegarnia.order.domain.Order;
 import pl.sztuczkap.ksiegarnia.order.domain.OrderRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,6 +35,6 @@ public class MemonyOrderRepository implements OrderRepository {
 
     @Override
     public List<Order> findAll() {
-        return null;
+        return new ArrayList<>(storage.values());
     }
 }
