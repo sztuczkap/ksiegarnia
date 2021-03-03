@@ -23,7 +23,6 @@ public class ApplicationStartup implements CommandLineRunner {
             @Value("${ksiegarnia.catalog.query}") String title,
             @Value("1") Long limit
     ) {
-
         this.catalog = catalog;
         this.title = title;
         this.limit = limit;
@@ -32,6 +31,15 @@ public class ApplicationStartup implements CommandLineRunner {
     @Override
     public void run(String... args) {
         initData();
+        searchCatalog();
+        placeOrder();
+    }
+
+    private void placeOrder() {
+
+    }
+
+    private void searchCatalog() {
         findByTitle();
         findAndUpdate();
         findByTitle();
