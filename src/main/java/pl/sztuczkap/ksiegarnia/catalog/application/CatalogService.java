@@ -6,6 +6,8 @@ import pl.sztuczkap.ksiegarnia.catalog.application.port.CatalogUseCase;
 import pl.sztuczkap.ksiegarnia.catalog.domain.Book;
 import pl.sztuczkap.ksiegarnia.catalog.domain.CatalogRepository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,6 +18,10 @@ class CatalogService implements CatalogUseCase {
 
     private CatalogRepository repository;
 
+    public List<Book> findAll() {
+        return repository.findAll();
+    }
+
     public List<Book> findByTitle(String title) {
         return repository.findAll()
                 .stream()
@@ -23,13 +29,13 @@ class CatalogService implements CatalogUseCase {
                 .collect(Collectors.toList());
     }
 
-    public List<Book> findAll() {
-        return null;
-    }
-
     @Override
     public Optional<Book> findOneByTitleAndAuthor(String title, String author) {
-        return Optional.empty();
+        return repository.findAll()
+                .stream()
+                .filter(book -> book.getTitle().startsWith(title))
+                .filter(book -> book.getAuthor().startsWith(author))
+                .findFirst();
     }
 
     public void addBook(CreateBookCommand command) {
@@ -38,16 +44,23 @@ class CatalogService implements CatalogUseCase {
     }
 
     @Override
+    public UpdateBookResponse updateBook(UpdateBookCommand command) {
+        return repository
+                .findById(command.getId())
+                .map(book -> {
+                    Book updatedBook = command.updateFields(book);
+                    repository.save(book);
+                    return UpdateBookResponse.SUCCESS;
+                })
+                .orElseGet(() -> new UpdateBookResponse(false, Arrays.asList("Book not found with id " + command.getId())));
+
+    }
+
+    @Override
     public void removeBook(Long id) {
 
     }
 
-    public void removeById(Long id) {
 
-    }
-
-    public void updateBook() {
-
-    }
 
 }
